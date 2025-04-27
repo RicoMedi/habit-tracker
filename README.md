@@ -4,20 +4,56 @@ A modern web application built with Next.js to help users build and maintain pos
 
 ## Features
 
-- 🔐 Secure user authentication
-- 📝 Full CRUD functionality for habit management
-- 📊 Daily habit completion tracking
-- 🔥 Streak monitoring and statistics
-- 📱 Responsive design for all devices
-- 📈 Personalized progress insights
+### Authentication
+
+- 🔐 Secure user authentication with email/password
+- 🚪 Protected routes and authenticated access
+- 🔄 Automatic session management
+
+### Habit Management
+
+- ✨ Create new habits with detailed configuration
+  - Title and description
+  - Daily or weekly frequency
+  - Custom color coding
+  - Specific days for weekly habits
+  - Start date and reminder time
+- 📝 Full CRUD functionality
+  - Create new habits
+  - View habit details
+  - Archive/unarchive habits
+  - Delete habits with confirmation
+- 🎯 Habit completion tracking
+  - Mark habits as complete
+  - Track daily progress
+  - View completion history
+
+### User Interface
+
+- 🌓 Dark/Light mode support
+- 📱 Fully responsive design
+- 🎨 Modern and clean UI with Tailwind CSS
+- ⚡ Smooth animations and transitions
+- 🔄 Real-time updates and loading states
+- 🎭 Custom modal components
+- 🗂️ Archive system for habit management
+
+### Database
+
+- 🔥 Real-time Firestore database
+- 🔒 Secure data access with Firestore rules
+- 📊 Efficient data querying with indexes
+- 🔄 Optimistic UI updates
 
 ## Tech Stack
 
 - **Frontend**: Next.js 15.3.1 with TypeScript
 - **Styling**: Tailwind CSS
-- **Authentication**: Firebase
+- **Authentication**: Firebase Auth
 - **Database**: Firestore
-- **Deployment**: Vercel
+- **State Management**: React Context
+- **Date Handling**: date-fns
+- **Deployment**: Vercel (pending)
 
 ## Getting Started
 
@@ -25,6 +61,7 @@ A modern web application built with Next.js to help users build and maintain pos
 
 - Node.js (Latest LTS version recommended)
 - npm or yarn
+- Firebase account
 
 ### Installation
 
@@ -65,23 +102,42 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the application.
 
-## Available Scripts
-
-- `npm run dev` - Start the development server
-- `npm run build` - Build the application for production
-- `npm run start` - Start the production server
-- `npm run lint` - Run ESLint for code quality
-
 ## Project Structure
 
 ```
 habit-tracker/
-├── app/              # Next.js app directory
-├── components/       # React components
-├── lib/             # Utility functions and Firebase setup
-├── public/          # Static assets
-└── styles/          # Global styles and Tailwind config
+├── src/
+│   ├── app/              # Next.js app directory and pages
+│   ├── components/       # React components
+│   │   ├── auth/        # Authentication components
+│   │   ├── habits/      # Habit management components
+│   │   └── ui/          # Shared UI components
+│   ├── contexts/        # React contexts (Auth, Theme)
+│   ├── utils/           # Utility functions
+│   └── config/          # Configuration files
+├── public/              # Static assets
+└── docs/               # Documentation files
 ```
+
+## Current Status
+
+### Completed Features
+
+- ✅ User authentication system
+- ✅ Habit creation and management
+- ✅ Daily/Weekly habit tracking
+- ✅ Dark/Light mode
+- ✅ Responsive design
+- ✅ Database integration
+- ✅ Protected routes
+
+### In Progress
+
+- 🚧 Statistics and streaks
+- 🚧 Data visualization
+- 🚧 User profile management
+- 🚧 Testing implementation
+- 🚧 Deployment setup
 
 ## Contributing
 
