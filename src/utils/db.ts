@@ -10,7 +10,49 @@ import {
   deleteDoc,
   Timestamp,
   orderBy,
+  setDoc,
+  getDoc,
 } from "firebase/firestore";
+
+// User interfaces and functions
+export interface User {
+  uid: string;
+  email: string;
+  displayName?: string;
+  createdAt: Timestamp;
+  lastLogin: Timestamp;
+  settings: {
+    theme: "light" | "dark" | "system";
+    startOfWeek: 0 | 1 | 2 | 3 | 4 | 5 | 6; // 0 = Sunday, 1 = Monday, etc.
+    notifications: boolean;
+    quietHoursStart?: string;
+    quietHoursEnd?: string;
+  };
+}
+
+// User Profile Operations
+export const createUserProfile = async (user: User) => {
+  const userRef = doc(db, "users", user.uid);
+  await setDoc(userRef, {
+    ...user,
+    settings: {
+      theme: "system",
+      startOfWeek: 1, // Monday
+      notifications: true,
+    },
+  });
+};
+
+export const getUserProfile = async (uid: string) => {
+  const userRef = doc(db, "users", uid);
+  const userSnap = await getDoc(userRef);
+  return userSnap.exists() ? (userSnap.data() as User) : null;
+};
+
+export const updateUserProfile = async (uid: string, data: Partial<User>) => {
+  const userRef = doc(db, "users", uid);
+  await updateDoc(userRef, { ...data, updatedAt: Timestamp.now() });
+};
 
 export interface Habit {
   id: string;
@@ -86,8 +128,31 @@ export const updateHabit = async (
 };
 
 export const deleteHabit = async (habitId: string) => {
-  const habitRef = doc(db, "habits", habitId);
-  await deleteDoc(habitRef);
+  try {
+    // Delete the habit first
+    const habitRef = doc(db, "habits", habitId);
+    await deleteDoc(habitRef);
+
+    // Then try to delete completions silently (no error logs)
+    try {
+      const completionsRef = collection(db, "habit_completions");
+      const q = query(completionsRef, where("habitId", "==", habitId));
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.docs.length > 0) {
+        const deletePromises = querySnapshot.docs.map((doc) =>
+          deleteDoc(doc.ref)
+        );
+        await Promise.all(deletePromises);
+      }
+    } catch {
+      // Silently continue if completion deletion fails
+    }
+
+    return true;
+  } catch (error) {
+    throw error;
+  }
 };
 
 // Habit Completions Collection Operations
@@ -101,7 +166,7 @@ export const markHabitComplete = async (
     habitId,
     userId,
     completedAt: Timestamp.now(),
-    notes,
+    ...(notes && { notes }),
   };
 
   const docRef = await addDoc(completionsRef, completion);
@@ -115,7 +180,7 @@ export const getHabitCompletions = async (
   endDate?: Date
 ) => {
   const completionsRef = collection(db, "habit_completions");
-  let constraints = [
+  const constraints = [
     where("habitId", "==", habitId),
     where("userId", "==", userId),
     orderBy("completedAt", "desc"),

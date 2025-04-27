@@ -24,10 +24,11 @@ service cloud.firestore {
       allow update, delete: if isAuthenticated() && isOwner(resource.data.userId);
     }
     
-    // Habit completions
+    // Habit completions - simplified rules
     match /habit_completions/{completionId} {
       allow read: if isAuthenticated() && isOwner(resource.data.userId);
       allow create: if isAuthenticated() && isOwner(request.resource.data.userId);
+      // Allow deletion if you're the owner of the completion
       allow delete: if isAuthenticated() && isOwner(resource.data.userId);
     }
   }

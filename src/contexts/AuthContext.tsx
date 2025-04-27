@@ -11,8 +11,8 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import { auth } from "@/lib/firebase";
-import { createUserProfile, getUserProfile } from "@/lib/db";
+import { auth } from "@/config/firebase";
+import { createUserProfile, getUserProfile } from "@/utils/db";
 import { Timestamp } from "firebase/firestore";
 
 interface AuthContextType {

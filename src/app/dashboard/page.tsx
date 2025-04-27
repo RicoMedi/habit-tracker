@@ -33,12 +33,18 @@ export default function Dashboard() {
   const handleCreateHabit = async (habitData: any) => {
     try {
       if (!user) return;
-      await createHabit(user.uid, habitData);
+
+      // Immediately close the form to improve UI responsiveness
       setShowCreateForm(false);
+
+      // Create the habit
+      await createHabit(user.uid, habitData);
+
       // Trigger a refresh of the habit list
       setRefreshTrigger((prev) => prev + 1);
     } catch (error) {
       console.error("Error creating habit:", error);
+      // If there's an error, you might want to show an error notification here
     }
   };
 
