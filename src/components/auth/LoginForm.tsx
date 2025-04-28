@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 
 export default function LoginForm() {
@@ -9,6 +10,7 @@ export default function LoginForm() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { signIn, signInWithGoogle } = useAuth();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -16,6 +18,7 @@ export default function LoginForm() {
       setError("");
       setLoading(true);
       await signIn(email, password);
+      router.push("/dashboard");
     } catch (error) {
       console.log(error);
       setError("Failed to sign in. Please check your credentials.");
@@ -29,6 +32,7 @@ export default function LoginForm() {
       setError("");
       setLoading(true);
       await signInWithGoogle();
+      router.push("/dashboard");
     } catch (error) {
       console.log(error);
       setError("Failed to sign in with Google.");
@@ -39,7 +43,8 @@ export default function LoginForm() {
 
   return (
     <div className="min-h-[calc(100vh-4rem)] w-full flex items-center justify-center px-4 sm:px-6 lg:px-8">
-      <div className="w-full max-w-sm sm:max-w-md space-y-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 sm:p-8">
+      <div className="w-full max-w-lg space-y-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 sm:p-10">
+
         <div className="text-center">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
             Welcome back

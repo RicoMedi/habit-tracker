@@ -28,14 +28,12 @@ export default function DeleteHabitDrawer({
     setError(null);
 
     try {
-      // First update UI for better responsiveness
       onDelete(habit.id);
       onClose();
 
-      // Then perform the actual deletion
       await deleteHabit(habit.id);
     } catch (err) {
-      // Silent error handling - just make sure the UI is updated
+      
     } finally {
       setIsDeleting(false);
     }

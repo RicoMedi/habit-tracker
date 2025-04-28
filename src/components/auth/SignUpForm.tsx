@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 
 export default function SignUpForm() {
@@ -11,6 +12,7 @@ export default function SignUpForm() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { signUp, signInWithGoogle } = useAuth();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,6 +29,7 @@ export default function SignUpForm() {
       setError("");
       setLoading(true);
       await signUp(email, password);
+      router.push("/dashboard");
     } catch (error: any) {
       setError(error.message || "Failed to create an account");
     } finally {
@@ -39,6 +42,7 @@ export default function SignUpForm() {
       setError("");
       setLoading(true);
       await signInWithGoogle();
+      router.push("/dashboard");
     } catch (error) {
       setError("Failed to sign up with Google");
     } finally {
