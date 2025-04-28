@@ -33,8 +33,14 @@ export interface User {
 // User Profile Operations
 export const createUserProfile = async (user: User) => {
   const userRef = doc(db, "users", user.uid);
+
+  // Remove undefined fields from user object
+  const userData = Object.fromEntries(
+    Object.entries(user).filter((entry) => entry[1] !== undefined)
+  );
+
   await setDoc(userRef, {
-    ...user,
+    ...userData,
     settings: {
       theme: "system",
       startOfWeek: 1, // Monday
