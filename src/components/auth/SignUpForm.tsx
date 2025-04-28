@@ -30,8 +30,10 @@ export default function SignUpForm() {
       setLoading(true);
       await signUp(email, password);
       router.push("/dashboard");
-    } catch (error: any) {
-      setError(error.message || "Failed to create an account");
+    } catch (err: unknown) {
+      setError(
+        err instanceof Error ? err.message : "Failed to create an account"
+      );
     } finally {
       setLoading(false);
     }
@@ -43,7 +45,8 @@ export default function SignUpForm() {
       setLoading(true);
       await signInWithGoogle();
       router.push("/dashboard");
-    } catch (error) {
+    } catch (err) {
+      console.error(err);
       setError("Failed to sign up with Google");
     } finally {
       setLoading(false);

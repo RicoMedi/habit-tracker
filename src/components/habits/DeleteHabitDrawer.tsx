@@ -32,8 +32,8 @@ export default function DeleteHabitDrawer({
       onClose();
 
       await deleteHabit(habit.id);
-    } catch (err) {
-      
+    } catch {
+      // Error handling can be added here if needed
     } finally {
       setIsDeleting(false);
     }

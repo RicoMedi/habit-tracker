@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import CreateHabitForm from "@/components/habits/CreateHabitForm";
 import HabitList from "@/components/habits/HabitList";
 import { createHabit } from "@/utils/db";
+import type { HabitFormData } from "@/types/habit";
 
 export default function Dashboard() {
   const { user, loading, logout } = useAuth();
@@ -30,7 +31,7 @@ export default function Dashboard() {
     }
   };
 
-  const handleCreateHabit = async (habitData: any) => {
+  const handleCreateHabit = async (habitData: HabitFormData) => {
     try {
       if (!user) return;
 

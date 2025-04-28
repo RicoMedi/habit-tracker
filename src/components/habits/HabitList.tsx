@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   Habit,
@@ -42,7 +42,7 @@ export default function HabitList({
     weeklyHabits: 0,
   });
 
-  const loadHabits = async () => {
+  const loadHabits = useCallback(async () => {
     if (!user) return;
     try {
       setLoading(true);
@@ -95,19 +95,19 @@ export default function HabitList({
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
 
   // Load habits on initial mount and when user changes
   useEffect(() => {
     loadHabits();
-  }, [user]);
+  }, [user, loadHabits]);
 
   // Re-load habits when refreshTrigger changes
   useEffect(() => {
     if (refreshTrigger > 0) {
       loadHabits();
     }
-  }, [refreshTrigger]);
+  }, [refreshTrigger, loadHabits]);
 
   const handleComplete = async (habitId: string) => {
     if (!user) return;
@@ -199,7 +199,7 @@ export default function HabitList({
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
           <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-2">
-            Today's Progress
+            Today&apos;s Progress
           </h3>
           <div className="flex items-center justify-between">
             <span className="text-3xl font-bold text-blue-600 dark:text-blue-400">
