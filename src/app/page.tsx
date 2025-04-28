@@ -25,14 +25,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <div className="flex justify-end p-4">
-        <Link
-          href="/auth/signup"
-          className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium"
-        >
-          Sign up
-        </Link>
-      </div>
+     
       <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center">
         <div className="w-full max-w-md px-4">
           <h1 className="text-4xl font-bold text-center text-gray-900 dark:text-white mb-8">

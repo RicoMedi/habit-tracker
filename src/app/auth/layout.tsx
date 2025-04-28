@@ -11,7 +11,7 @@ export default function AuthLayout({
         <div className="container mx-auto flex justify-between items-center">
           <Link
             href="/"
-            className="text-xl font-bold text-gray-900 dark:text-white"
+            className="text-3xl font-bold text-gray-900 dark:text-white"
           >
             Habit Tracker
           </Link>
@@ -20,7 +20,7 @@ export default function AuthLayout({
               <li>
                 <Link
                   href="/auth/login"
-                  className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+                  className="text-xl text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
                 >
                   Login
                 </Link>
@@ -28,7 +28,7 @@ export default function AuthLayout({
               <li>
                 <Link
                   href="/auth/signup"
-                  className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+                  className=" text-xl text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
                 >
                   Sign Up
                 </Link>
